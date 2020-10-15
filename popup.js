@@ -1,6 +1,6 @@
-enable_button = document.getElementById('btnToggleRedirects')
+var enable_button = document.getElementById('btnToggleRedirects')
 enable_button.addEventListener('click', toggleRedirects);
-enable_zoom_button = document.getElementById('btnToggleZoom')
+var enable_zoom_button = document.getElementById('btnToggleZoom')
 enable_zoom_button.addEventListener('click', toggleZoom);
 
 chrome.runtime.sendMessage("getState", (state) => {

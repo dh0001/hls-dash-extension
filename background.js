@@ -1,33 +1,59 @@
-var enabled = chrome.storage.local.get("enabled");
-if (enabled == undefined) enabled = true;
-var zoomEnabled = chrome.storage.local.get("zoomEnabled");
-if (zoomEnabled == undefined) zoomEnabled = true;
+var state = {
+	enabled: true,
+	zoomEnabled: true
+}
+
+function updateicon() {
+	if (state.enabled) {
+		chrome.browserAction.setIcon({
+			path: {
+				"16": "img/multimedia16.png",
+				"48": "img/multimedia48.png",
+				"128": "img/multimedia128.png"
+			  }
+		})
+	}
+	else {
+		chrome.browserAction.setIcon({
+			path: {
+				"16": "img/multimediaoff16.png",
+				"48": "img/multimediaoff48.png",
+				"128": "img/multimediaoff128.png"
+			  }
+		})
+	}
+}
+
+chrome.storage.local.get(null, (storage) => {
+	if (state.enabled !== undefined) state = storage
+	updateicon()
+});
 
 chrome.runtime.onMessage.addListener(
 	function (request, sender, sendResponse) {
-		
+
 		if (request == "getState") {
-			sendResponse([enabled, zoomEnabled]);
+			sendResponse([state.enabled, state.zoomEnabled]);
 
-		} else if (request == "Redirects Enabled" || request == "Redirects Disabled"){
-			enabled = request === "Redirects Enabled";
-			enabled ? chrome.browserAction.setIcon({ path: "img/multimedia.svg" }) : chrome.browserAction.setIcon({ path: "img/multimediaoff.svg" })
+		} else if (request == "Redirects Enabled" || request == "Redirects Disabled") {
+			state.enabled = request === "Redirects Enabled";
+			updateicon()
 			chrome.storage.local.set({
-				enabled: enabled
-			  })
+				enabled: state.enabled
+			})
 
-		} else if (request == "Zoom Enabled" || request == "Zoom Disabled"){
-			zoomEnabled = request === "Zoom Enabled";
+		} else if (request == "Zoom Enabled" || request == "Zoom Disabled") {
+			state.zoomEnabled = request === "Zoom Enabled";
 			chrome.storage.local.set({
-				zoomEnabled: zoomEnabled
-			  })
+				zoomEnabled: state.zoomEnabled
+			})
 		}
 	}
 );
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function (info) {
-		if (enabled) {
+		if (state.enabled) {
 			var playerUrl = chrome.runtime.getURL('hls.html') + "?video=" + info.url
 			// if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
 			// 	chrome.tabs.update(info.tabId, { url: playerUrl });
@@ -43,7 +69,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function (info) {
-		if (enabled) {
+		if (state.enabled) {
 			var playerUrl = chrome.runtime.getURL('dash.html') + "?video=" + info.url
 			return { redirectUrl: playerUrl }
 		}
