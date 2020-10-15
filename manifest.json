@@ -1,0 +1,34 @@
+{
+  "name": "HLS and DASH Playback",
+  "version": "0.12.7",
+  "description": "Play HLS and DASH video urls (m3u8/mpd) in your browser",
+  "manifest_version": 2,
+  "icons": {
+    "48": "img/multimedia.svg",
+    "128": "img/multimedia.svg",
+    "256": "img/multimedia.svg",
+    "512": "img/multimedia.svg"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_security_policy": "script-src 'self' blob:; object-src 'self'",
+  "permissions": [
+    "*://*/*.m3u8",
+    "*://*/*.mpd",
+    "webRequest",
+    "webRequestBlocking",
+    "storage"
+  ],
+  "browser_action": {
+    "default_title": "HLS and DASH Playback",
+    "default_icon": "img/multimedia.svg",
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    "*.js",
+    "*.html"
+  ]
+}

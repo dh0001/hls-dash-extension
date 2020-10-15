@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+<style>
+    button {
+        background: 0 0;
+        border: none;
+        /* border-radius: 15px; */
+        color: #D84141;
+        /* position: relative; */
+        /* height: 36px; */
+        margin: 0;
+        /* min-width: 64px; */
+        padding: 8px 16px;
+        /* display: inline-block; */
+        /* font-family:; */
+        /* font-size: 14px; */
+        /* font-weight: 500; */
+        /* text-transform: uppercase; */
+        /* letter-spacing: 0; */
+        /* overflow: hidden; */
+        will-change: box-shadow;
+        transition: box-shadow .2s cubic-bezier(.4, 0, 1, 1), background-color .2s cubic-bezier(.4, 0, .2, 1), color .2s cubic-bezier(.4, 0, .2, 1);
+        /* outline: none; */
+        cursor: pointer;
+        /* text-decoration: none; */
+        /* text-align: center; */
+        /* line-height: 36px; */
+        /* vertical-align: middle; */
+        /* font-size: medium; */
+        width: 100%;
+    }
+
+    body {
+        text-align: center;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    button:hover {
+        background-color: rgba(158, 158, 158, .2);
+    }
+</style>
+<div>
+    <button id="btnToggleRedirects">Redirects Enabled</button>
+    <button id="btnToggleZoom">Zoom Enabled</button>
+</div>
+<script type="text/javascript" src="popup.js"></script>
+
+</html>
