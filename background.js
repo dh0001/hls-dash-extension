@@ -1,55 +1,36 @@
-var state = {
-	enabled: true,
-	zoomEnabled: true
-}
-
-function updateicon() {
-	if (state.enabled) {
-		chrome.browserAction.setIcon({
-			path: {
-				"16": "img/multimedia16.png",
-				"48": "img/multimedia48.png",
-				"128": "img/multimedia128.png"
-			  }
-		})
-	}
-	else {
-		chrome.browserAction.setIcon({
-			path: {
-				"16": "img/multimediaoff16.png",
-				"48": "img/multimediaoff48.png",
-				"128": "img/multimediaoff128.png"
-			  }
-		})
-	}
-}
+var state;
 
 chrome.storage.local.get(null, (storage) => {
-	if (state.enabled !== undefined) state = storage
-	updateicon()
+	if (storage.enabled !== undefined) state = storage
+	else state = {
+		enabled: true,
+		zoomEnabled: true,
+		quality: 'auto'
+	}
+	if (state.enabled) change_icon_enabled()
+	else change_icon_disabled()
 });
 
-chrome.runtime.onMessage.addListener(
-	function (request, sender, sendResponse) {
-
-		if (request == "getState") {
-			sendResponse([state.enabled, state.zoomEnabled]);
-
-		} else if (request == "Redirects Enabled" || request == "Redirects Disabled") {
-			state.enabled = request === "Redirects Enabled";
-			updateicon()
-			chrome.storage.local.set({
-				enabled: state.enabled
-			})
-
-		} else if (request == "Zoom Enabled" || request == "Zoom Disabled") {
-			state.zoomEnabled = request === "Zoom Enabled";
-			chrome.storage.local.set({
-				zoomEnabled: state.zoomEnabled
-			})
+function change_icon_enabled(){
+	chrome.browserAction.setIcon({
+		path: {
+			"16": "img/multimedia16.png",
+			"48": "img/multimedia48.png",
+			"128": "img/multimedia128.png"
 		}
-	}
-);
+	})
+}
+
+function change_icon_disabled(){
+	chrome.browserAction.setIcon({
+		path: {
+			"16": "img/multimediaoff16.png",
+			"48": "img/multimediaoff48.png",
+			"128": "img/multimediaoff128.png"
+		}
+	})
+}
+
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function (info) {

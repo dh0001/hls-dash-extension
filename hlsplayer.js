@@ -1,15 +1,20 @@
-
+var background_page = chrome.extension.getBackgroundPage()
 var video = document.getElementById('video');
 
-chrome.runtime.sendMessage("getState", function(state){
-  state[1] ? video.classList.add("zoomed_mode") : video.classList.add("native_mode");
-});
+background_page.state.zoomEnabled ? video.classList.add("zoomed_mode") : video.classList.add("native_mode");
 
 var hls = new Hls();
 hls.loadSource((new URL(document.location)).searchParams.get("video"));
 hls.attachMedia(video);
 hls.on(Hls.Events.MANIFEST_PARSED, function() {
-  video.play();
+	if (background_page.state.quality === 'high'){
+		hls.currentLevel = hls.levels.length - 1
+		hls.firstLevel = hls.levels.length - 1
+	} else if (background_page.state.quality === 'low'){
+		hls.currentLevel = 0
+		hls.firstLevel = 0
+	}
+	video.play();
 });
 
 // hls.js is not supported on platforms that do not have Media Source

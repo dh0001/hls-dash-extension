@@ -34,6 +34,11 @@
         white-space: nowrap;
     }
 
+    label{
+        padding: 8px 0px;
+        font-family: sans-serif;
+    }
+
     body {
         text-align: center;
     }
@@ -51,6 +56,12 @@
 <div>
     <button id="btnToggleRedirects">Redirects Enabled</button>
     <button id="btnToggleZoom">Zoom Enabled</button>
+    <label for="male">Perferred Quality:</label>
+    <select id="qualityOptions">
+        <option value="auto">Auto</option>
+        <option value="high">Highest</option>
+        <option value="low">Lowest</option>
+    </select>
 </div>
 <script type="text/javascript" src="popup.js"></script>
 
