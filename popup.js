@@ -50,7 +50,7 @@ function perferredQualityChanged() {
 	background_page.state.quality = perferred_quality_selector.value
 	
 	chrome.storage.local.set({
-		zoomEnabled: perferred_quality_selector.value
+		quality: perferred_quality_selector.value
 	})
 }
 
