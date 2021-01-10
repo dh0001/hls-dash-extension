@@ -2,10 +2,13 @@ var state;
 
 chrome.storage.local.get(null, (storage) => {
 	if (storage.enabled !== undefined) state = storage
-	else state = {
-		enabled: true,
-		zoomEnabled: true,
-		quality: 'auto'
+	else {
+		state = {
+			enabled: true,
+			zoomEnabled: true,
+			quality: 'auto'
+		}
+		chrome.storage.local.set(state)
 	}
 	if (state.enabled) change_icon_enabled()
 	else change_icon_disabled()
