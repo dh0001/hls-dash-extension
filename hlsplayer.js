@@ -1,21 +1,24 @@
-var background_page = chrome.extension.getBackgroundPage()
+
 var video = document.getElementById('video');
 
-background_page.state.zoomEnabled ? video.classList.add("zoomed_mode") : video.classList.add("native_mode");
+// cant use chrome.extension.getBackgroundPage(), is null in firefox private window
+chrome.storage.local.get(null, (state) => {
+	state.zoomEnabled ? video.classList.add("zoomed_mode") : video.classList.add("native_mode");
 
-var hls = new Hls();
-hls.loadSource((new URL(document.location)).searchParams.get("video"));
-hls.attachMedia(video);
-hls.on(Hls.Events.MANIFEST_PARSED, function() {
-	if (background_page.state.quality === 'high'){
-		hls.currentLevel = hls.levels.length - 1
-		hls.firstLevel = hls.levels.length - 1
-	} else if (background_page.state.quality === 'low'){
-		hls.currentLevel = 0
-		hls.firstLevel = 0
-	}
-	video.play();
-});
+	var hls = new Hls();
+	hls.loadSource((new URL(document.location)).searchParams.get("video"));
+	hls.attachMedia(video);
+	hls.on(Hls.Events.MANIFEST_PARSED, function() {
+		if (state.quality === 'high'){
+			hls.currentLevel = hls.levels.length - 1
+			hls.firstLevel = hls.levels.length - 1
+		} else if (state.quality === 'low'){
+			hls.currentLevel = 0
+			hls.firstLevel = 0
+		}
+		video.play();
+	});
+})
 
 // hls.js is not supported on platforms that do not have Media Source
 // Extensions (MSE) enabled.

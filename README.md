@@ -8,7 +8,7 @@ Clicking on the icon opens a menu where you can:
 
   * Toggle redirect behavior, allowing m3u8 and mpd files to be downloaded normally.
   * Toggle zoom, changing if the video should be resized to fit the screen.
-  * Change perferred quality of video between highest, lowest, or automatically selected.
+  * Change preferred quality of video between highest, lowest, or automatically selected.
 
 [hls.js]: https://github.com/video-dev/hls.js
 [dash.js]: https://github.com/Dash-Industry-Forum/dash.js

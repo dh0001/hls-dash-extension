@@ -1,4 +1,3 @@
-var background_page = chrome.extension.getBackgroundPage()
 
 var enable_button = document.getElementById('btnToggleRedirects')
 enable_button.addEventListener('click', toggleRedirects);
@@ -7,48 +6,42 @@ var enable_zoom_button = document.getElementById('btnToggleZoom')
 enable_zoom_button.addEventListener('click', toggleZoom);
 
 var perferred_quality_selector = document.getElementById('qualityOptions')
-perferred_quality_selector.value = background_page.state.quality
 perferred_quality_selector.addEventListener('change', perferredQualityChanged);
 
 
 
-background_page.state.enabled ? enable_button.innerHTML = "Redirects ✓" : enable_button.innerHTML = "Redirects ✗";
-background_page.state.zoomEnabled ? enable_zoom_button.innerHTML = "Zoom ✓" : enable_zoom_button.innerHTML = "Zoom ✗";
+chrome.storage.local.get(null, (state) => {
+	state.enabled ? enable_button.innerHTML = "Redirects ✓" : enable_button.innerHTML = "Redirects ✗";
+	state.zoomEnabled ? enable_zoom_button.innerHTML = "Zoom ✓" : enable_zoom_button.innerHTML = "Zoom ✗";
+	perferred_quality_selector.value = state.quality
+})
 
 
 function toggleRedirects() {
 	if (enable_button.innerHTML === "Redirects ✓") {
 		enable_button.innerHTML = "Redirects ✗"
-		background_page.change_icon_disabled()
-		background_page.state.enabled = false
+		change_icon_disabled()
+		chrome.storage.local.set({ enabled: false })
 	} else {
 		enable_button.innerHTML = "Redirects ✓"
-		background_page.change_icon_enabled()
-		background_page.state.enabled = true
+		change_icon_enabled()
+		chrome.storage.local.set({ enabled: true })
 	}
-	chrome.storage.local.set({
-		enabled: background_page.state.enabled
-	})
 }
 
 
 function toggleZoom() {
 	if (enable_zoom_button.innerHTML === "Zoom ✓") {
 		enable_zoom_button.innerHTML = "Zoom ✗"
-		background_page.state.zoomEnabled = false
+		chrome.storage.local.set({ zoomEnabled: false })
 	} else {
 		enable_zoom_button.innerHTML = "Zoom ✓"
-		background_page.state.zoomEnabled = true
+		chrome.storage.local.set({ zoomEnabled: true })
 	}
-	chrome.storage.local.set({
-		zoomEnabled: background_page.state.zoomEnabled
-	})
 }
 
 
 function perferredQualityChanged() {
-	background_page.state.quality = perferred_quality_selector.value
-	
 	chrome.storage.local.set({
 		quality: perferred_quality_selector.value
 	})
@@ -62,3 +55,23 @@ function perferredQualityChanged() {
 //       window.close();
 //   });
 // }
+
+function change_icon_enabled(){
+	chrome.browserAction.setIcon({
+		path: {
+			"16": "img/multimedia16.png",
+			"48": "img/multimedia48.png",
+			"128": "img/multimedia128.png"
+		}
+	})
+}
+
+function change_icon_disabled(){
+	chrome.browserAction.setIcon({
+		path: {
+			"16": "img/multimediaoff16.png",
+			"48": "img/multimediaoff48.png",
+			"128": "img/multimediaoff128.png"
+		}
+	})
+}
