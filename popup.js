@@ -10,21 +10,19 @@ perferred_quality_selector.addEventListener('change', perferredQualityChanged);
 
 
 
-chrome.storage.local.get(null, (state) => {
-	state.enabled ? enable_button.innerHTML = "Redirects ✓" : enable_button.innerHTML = "Redirects ✗";
-	state.zoomEnabled ? enable_zoom_button.innerHTML = "Zoom ✓" : enable_zoom_button.innerHTML = "Zoom ✗";
-	perferred_quality_selector.value = state.quality
+chrome.storage.local.get(null, ({enabled, zoomEnabled, quality}) => {
+	enabled ? enable_button.innerHTML = "Redirects ✓" : enable_button.innerHTML = "Redirects ✗";
+	zoomEnabled ? enable_zoom_button.innerHTML = "Zoom ✓" : enable_zoom_button.innerHTML = "Zoom ✗";
+	perferred_quality_selector.value = quality
 })
 
 
 function toggleRedirects() {
 	if (enable_button.innerHTML === "Redirects ✓") {
 		enable_button.innerHTML = "Redirects ✗"
-		change_icon_disabled()
 		chrome.storage.local.set({ enabled: false })
 	} else {
 		enable_button.innerHTML = "Redirects ✓"
-		change_icon_enabled()
 		chrome.storage.local.set({ enabled: true })
 	}
 }
@@ -55,23 +53,3 @@ function perferredQualityChanged() {
 //       window.close();
 //   });
 // }
-
-function change_icon_enabled(){
-	chrome.browserAction.setIcon({
-		path: {
-			"16": "img/multimedia16.png",
-			"48": "img/multimedia48.png",
-			"128": "img/multimedia128.png"
-		}
-	})
-}
-
-function change_icon_disabled(){
-	chrome.browserAction.setIcon({
-		path: {
-			"16": "img/multimediaoff16.png",
-			"48": "img/multimediaoff48.png",
-			"128": "img/multimediaoff128.png"
-		}
-	})
-}

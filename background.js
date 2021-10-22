@@ -1,18 +1,29 @@
-var state;
+var enabled;
 
-chrome.storage.local.get(null, (storage) => {
-	if (storage.enabled !== undefined) state = storage
-	else {
-		state = {
+chrome.storage.local.get("enabled", (storage_enabled) => {
+	enabled = storage_enabled.enabled;
+	if (enabled === undefined)
+		chrome.storage.local.set({
 			enabled: true,
 			zoomEnabled: true,
 			quality: 'auto'
-		}
-		chrome.storage.local.set(state)
-	}
-	if (state.enabled) change_icon_enabled()
+		})
+
+	if (enabled) change_icon_enabled()
 	else change_icon_disabled()
 });
+
+
+chrome.storage.onChanged.addListener((changes) => {
+	let changedItems = Object.keys(changes);
+	for (let item of changedItems) {
+		if (item === "enabled") {
+			enabled = !enabled;
+			if (enabled) change_icon_enabled()
+			else change_icon_disabled()
+		}
+	}
+  });
 
 function change_icon_enabled(){
 	chrome.browserAction.setIcon({
@@ -37,7 +48,7 @@ function change_icon_disabled(){
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function (info) {
-		if (state.enabled) {
+		if (enabled) {
 			var playerUrl = chrome.runtime.getURL('hls.html') + "?video=" + info.url
 			// if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
 			// 	chrome.tabs.update(info.tabId, { url: playerUrl });
@@ -53,7 +64,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function (info) {
-		if (state.enabled) {
+		if (enabled) {
 			var playerUrl = chrome.runtime.getURL('dash.html') + "?video=" + info.url
 			return { redirectUrl: playerUrl }
 		}
