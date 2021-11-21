@@ -1,6 +1,6 @@
 {
   "name": "HLS and DASH Playback",
-  "version": "0.12.9",
+  "version": "0.12.9.1",
   "description": "Play HLS and DASH video urls (m3u8/mpd) in your browser",
   "manifest_version": 2,
   "icons": {
@@ -10,7 +10,7 @@
   },
   "background": {
     "scripts": [
-      "background.js"
+      "js/background.js"
     ]
   },
   "content_security_policy": "script-src 'self' blob:; object-src 'self'",
