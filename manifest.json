@@ -13,7 +13,7 @@
       "js/background.js"
     ]
   },
-  "content_security_policy": "script-src 'self' blob:; object-src 'self'",
+  "content_security_policy": "script-src 'self'; object-src 'self'",
   "permissions": [
     "*://*/*.m3u8",
     "*://*/*.mpd",

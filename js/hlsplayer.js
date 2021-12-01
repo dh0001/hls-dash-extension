@@ -10,7 +10,7 @@ if (md.mobile()) {
 chrome.storage.local.get(null, (state) => {
 	state.zoomEnabled ? video.classList.add("zoomed_mode") : video.classList.add("native_mode");
 
-	var hls = new Hls();
+	var hls = new Hls({enableWorker: false});
 	hls.loadSource((new URL(document.location)).searchParams.get("video"));
 	hls.attachMedia(video);
 	hls.on(Hls.Events.MANIFEST_PARSED, function() {
