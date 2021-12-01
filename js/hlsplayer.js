@@ -1,5 +1,10 @@
+var video = document.querySelector('video');
 
-var video = document.getElementById('video');
+var md = new MobileDetect(window.navigator.userAgent);
+
+if (md.mobile()) {
+	document.documentElement.classList.add('mobile');
+}
 
 // cant use chrome.extension.getBackgroundPage(), is null in firefox private window
 chrome.storage.local.get(null, (state) => {
