@@ -23,7 +23,7 @@ chrome.storage.onChanged.addListener((changes) => {
 			else change_icon_disabled()
 		}
 	}
-  });
+});
 
 function change_icon_enabled(){
 	chrome.browserAction.setIcon({
