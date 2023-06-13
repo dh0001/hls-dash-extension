@@ -1,0 +1,45 @@
+{
+  "name": "hls-dash-extension",
+  "version": "0.12.11",
+  "description": "Play HLS and DASH video urls (m3u8/mpd) in your browser",
+  "scripts": {
+    "build": "web-ext build",
+    "sign": "web-ext sign",
+    "firefox": "web-ext run",
+    "chrome": "web-ext run --target chromium"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dh0001/hls-dash-extension.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dh0001/hls-dash-extension/issues"
+  },
+  "homepage": "https://github.com/dh0001/hls-dash-extension#readme",
+  "webExt": {
+    "build": {
+      "overwriteDest": true
+    },
+    "sourceDir": "./src",
+    "run": {
+      "startUrl": [
+        "about:debugging",
+        "about:newtab",
+        "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd",
+        "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+      ]
+    },
+    "ignoreFiles": [
+      "options.js",
+      "embedded_videos.js",
+      "web-ext-config.js",
+      "web-ext-artifacts",
+      "extension_info"
+    ]
+  },
+  "devDependencies": {
+    "web-ext": "^7.6.2"
+  }
+}

@@ -1,3 +1,5 @@
 web-ext-artifacts
 .web-extension-id
 web-ext-config.js
+node_modules
+extension_info
