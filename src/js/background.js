@@ -3,22 +3,21 @@ var enabled;
 chrome.storage.local.get("enabled", (storage_enabled) => {
 	enabled = storage_enabled.enabled;
 	if (enabled === undefined)
+		// set default settings
 		chrome.storage.local.set({
 			enabled: true,
 			zoomEnabled: true,
 			quality: 'auto'
 		})
-
 	if (enabled) change_icon_enabled()
 	else change_icon_disabled()
 });
 
 
 chrome.storage.onChanged.addListener((changes) => {
-	let changedItems = Object.keys(changes);
-	for (let item of changedItems) {
-		if (item === "enabled") {
-			enabled = !enabled;
+	for (let [key, { _, newValue }] of Object.entries(changes)) {
+		if (key === "enabled") {
+			enabled = newValue
 			if (enabled) change_icon_enabled()
 			else change_icon_disabled()
 		}
