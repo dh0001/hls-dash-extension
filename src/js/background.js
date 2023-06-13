@@ -56,7 +56,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 			return { redirectUrl: playerUrl }
 		}
 	},
-	{ urls: ["*://*/*.m3u8"], types: ["main_frame"] },
+	{ urls: ["*://*/*.m3u8", "*://*/*.m3u8?*", "*://*/*.m3u8#*"], types: ["main_frame"] },
 	["blocking"]
 );
 
@@ -68,7 +68,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 			return { redirectUrl: playerUrl }
 		}
 	},
-	{ urls: ["*://*/*.mpd"], types: ["main_frame"] },
+	{ urls: ["*://*/*.mpd", "*://*/*.mpd?*", "*://*/*.mpd#*"], types: ["main_frame"] },
 	["blocking"]
 );
 

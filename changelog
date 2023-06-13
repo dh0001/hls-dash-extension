@@ -1,0 +1,31 @@
+0.12.12
+- redirects work for urls for parameters
+- update dash.js to v4.7.0
+- update hls.js to v1.4.5
+
+0.12.11
+update libraries, fix quality selection for dash
+
+0.12.10
+- "native mode" now has the seekbar at the bottom of the window, and the whole length can be used
+
+- add 1px top padding which mitigates issue in firefox mobile where 100vh is not long enough to allow scrolling in the page, even though content is still cut off
+
+- disable worker in hls.js to reduce required csp level, but might reduce performance
+
+0.12.9.1
+update to hls 1.1.1
+
+0.12.9
+Fix enable/disable feature
+Update dash.all.min.js to v4.1.0
+Update hls.light.min.js to v1.0.11
+
+0.12.8.1
+fix private windows
+
+0.12.8
+Change preferred quality of video between highest, lowest, or automatically selected
+
+0.12.7
+Changes to popup menu

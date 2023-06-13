@@ -1,12 +1,12 @@
 {
   "name": "hls-dash-extension",
-  "version": "0.12.11",
+  "version": "0.12.12",
   "description": "Play HLS and DASH video urls (m3u8/mpd) in your browser",
   "scripts": {
     "build": "web-ext build",
     "sign": "web-ext sign",
-    "firefox": "web-ext run",
-    "chrome": "web-ext run --target chromium"
+    "firefox": "web-ext run --start-url about:newtab --start-url about:debugging --start-url https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd --start-url https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+    "chrome": "web-ext run --target chromium --start-url https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd"
   },
   "repository": {
     "type": "git",
@@ -18,19 +18,23 @@
     "url": "https://github.com/dh0001/hls-dash-extension/issues"
   },
   "homepage": "https://github.com/dh0001/hls-dash-extension#readme",
+  "//": [
+    "// OLD START URLS",
+    "// having about:debugging be the first page in firefox causes an issue with loading from storage (enabled will be undefined)",
+    "about:newtab",
+    "about:debugging",
+    "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd",
+    "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd?test=true#test",
+    "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd#test",
+    "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+    "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8?test=true",
+    "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8#test"
+  ],
   "webExt": {
     "build": {
       "overwriteDest": true
     },
     "sourceDir": "./src",
-    "run": {
-      "startUrl": [
-        "about:debugging",
-        "about:newtab",
-        "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd",
-        "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
-      ]
-    },
     "ignoreFiles": [
       "options.js",
       "embedded_videos.js",
